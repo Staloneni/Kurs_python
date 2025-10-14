@@ -4,7 +4,7 @@ Zwrotka_party_2
 
 Zwrotka_party_3
 
-Refren_party_41
+Refren_party
 
 Zwrotka_party_4
 
@@ -12,10 +12,10 @@ Zwrotka_party_5
 
 Zwrotka_party_6
 
-Refren_party_61
+Refren_party
 
 It's pirate party time
 
-Refren_party_62
+Refren_party
 
-Refren_party_63
+Refren_party
