@@ -1,0 +1,11 @@
+Projekt o podaniu danych pordukcji energii elektrycznjej ze źródłe OZE został oparty na Open Power System Data. OPSD służy jako źródła daych, które są pobierane za pomocą przygotownaaje funkcji w pythonie. Strona Html umożliwa wybór sposoby ogaregacji danych, tryb miesieczny lub dzienny. Ponadtko zapewnia wybór dat dla których chcemy uzyskać informacja, wybór kraju oraz typu OZE (do wyboru jest energia z fotowoltaiczna, wiatora lądowa oraz morska). Python zwraca do strony w Html tablę danych z wybranymi źródłami oze, JavaScript przkształa tą tabele w wykres, który umożliwa łatwiejszą interpeteacje danych.  
+
+
+
+
+
+
+
+
+
+Link do ciekawej strony, podobnej do rozbudowania kiedyś: https://transparency.entsoe.eu/generation/actual/perType/generation?appState=%7B%22sa%22%3A%5B%22BZN%7C10YPL-AREA-----S%22%5D%2C%22st%22%3A%22BZN%22%2C%22mm%22%3Atrue%2C%22ma%22%3Afalse%2C%22sp%22%3A%22HALF%22%2C%22dt%22%3A%22CHART%22%2C%22df%22%3A%5B%222026-01-02%22%2C%222026-01-08%22%5D%2C%22tz%22%3A%22CET%22%7D

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<script> //Wybor tylko jednej opcji w checkboxach
+function Onebox(checkbox) {
+    var checkboxes = document.getElementsByName(checkbox.name)
+    checkboxes.forEach((item) => {
+        if (item !== checkbox) item.checked = false
+    })
+}
+</script>
+
+<html lang="pl">
+<head>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Produkcja OZE</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='StyleOZE.css') }}">
+</head>
+<body>
+
+<div class="jumbotron text-center">
+  <h1 align = "center">Produkcja energii OZE w Europie</h1>
+  <h4 align = "center"> Witaj na mojej stronie poświęconej produkcja OZE w Europie dla wybrnaych technologii. Dane pochodzą z bazy OPSD (Open Power System Data). 
+    Do wyboru posidasz sposób agregacji danych, zakres dat, kraje oraz rodzaj OZE. Uwaga progrma wyświetla dane dla jedego kraju, lecz można zaznaczyć kilka źródłe OZE.
+    Po wysłaniu formularza wyświetlą się dane w tabeli oraz na wykresie liniowym. Dane z zapożyczonej bazy danych obejmują zakres od 01.01.2015 do 01.10.2020, stan na 22.01.2026.</h4>
+</div>
+
+<!-- Formularz do wysłania wybranych danych za pomocą Flask do pythona -->
+<div class="color-main">
+  <div class="container">
+  <div class="row">
+    <div class="form-section">
+        <form method="POST">
+          <div class="col-md-3">
+            <div class = "Agregacja"> 
+              <h4><p class="my-text"><b>Agregacja danych<br>(dostępna tylko jedna opcja)</b></p></h4>
+              <input type="checkbox" id="D" name="Agregacja" value="D" onclick="Onebox(this)">
+              <label for="D"> Dziennie</label><br>
+              <input type="checkbox" id="M" name="Agregacja" value="M" onclick="Onebox(this)">
+              <label for="M"> Miesięcznie</label><br>
+            </div>
+          </div>
+
+        <!-- Wybór zakresu dat -->
+        <div class="col-md-3">
+            <div class="Wybor_daty">
+                <h4><p class="my-text"><b>Zakres dat</b></p></h4>
+                <div class= "Daty">
+                  <label for="start">Data początkowa:</label>
+                    <input
+                    type="date"
+                    id="start_date"
+                    name="start_date"
+                    value="2015-01-01"
+                    min="2015-01-01"
+                    max="2020-10-01" />
+                    <br><label for="end">Data końcowa:</label>
+                    <input
+                    type="date"
+                    id="end_date"
+                    name="end_date"
+                    value="2020-10-01"
+                    min="2015-01-01"
+                    max="2020-10-01" />
+                </div>
+              </div>
+          </div>
+
+        <!-- Wybór kraju -->
+        <div class="col-md-3">
+          <details open>
+            <summary><h4><p class="my-text"><b>Wybór kraju</b></p></h4></summary>
+            <div class="country-list">
+                <label><input type="checkbox" name="country" id = "AT" value="AT"> Austria</label>
+                <label><input type="checkbox" name="country" id = "BE" value="BE"> Belgia</label>
+                <label><input type="checkbox" name="country" id = "BG" value="BG"> Bułgaria</label>
+                <label><input type="checkbox" name="country" id = "HR" value="HR"> Chorwacja</label>
+                <label><input type="checkbox" name="country" id = "CY" value="CY"> Cypr</label>
+                <label><input type="checkbox" name="country" id = "CZ" value="CZ"> Czechy</label>
+                <label><input type="checkbox" name="country" id = "DK" value="DK"> Dania</label>
+                <label><input type="checkbox" name="country" id = "EE" value="EE"> Estonia</label>
+                <label><input type="checkbox" name="country" id = "FI" value="FI"> Finlandia</label>
+                <label><input type="checkbox" name="country" id = "FR" value="FR"> Francja</label>
+                <label><input type="checkbox" name="country" id = "DE" value="DE"> Niemcy</label>
+                <label><input type="checkbox" name="country" id = "GR" value="GR"> Grecja</label>
+                <label><input type="checkbox" name="country" id = "HU" value="HU"> Węgry</label>
+                <label><input type="checkbox" name="country" id = "IE" value="IE"> Irlandia</label>
+                <label><input type="checkbox" name="country" id = "IT" value="IT"> Włochy</label>
+                <label><input type="checkbox" name="country" id = "LV" value="LV"> Łotwa</label>
+                <label><input type="checkbox" name="country" id = "LT" value="LT"> Litwa</label>
+                <label><input type="checkbox" name="country" id = "LU" value="LU"> Luksemburg</label>
+                <label><input type="checkbox" name="country" id = "NL" value="NL"> Holandia</label>
+                <label><input type="checkbox" name="country" id = "NO" value="NO"> Norwegia</label>
+                <label><input type="checkbox" name="country" id = "PL" value="PL"> Polska</label>
+                <label><input type="checkbox" name="country" id = "PT" value="PT"> Portugalia</label>
+                <label><input type="checkbox" name="country" id = "RO" value="RO"> Rumunia</label>
+                <label><input type="checkbox" name="country" id = "SK" value="SK"> Słowacja</label>
+                <label><input type="checkbox" name="country" id = "SI" value="SI"> Słowenia</label>
+                <label><input type="checkbox" name="country" id = "ES" value="ES"> Hiszpania</label>
+                <label><input type="checkbox" name="country" id = "SE" value="SE"> Szwecja</label>
+                <label><input type="checkbox" name="country" id = "CH" value="CH"> Szwajcaria</label>
+                <label><input type="checkbox" name="country" id = "TR" value="TR"> Turcja</label>
+                <label><input type="checkbox" name="country" id = "GB" value="GB"> Wielka Brytania</label>
+              </div>
+            </details>
+        </div>
+
+        <!-- Wybór rodzaju OZE -->
+        <div class="col-md-3">
+        <div class = "Wybor_OZE">
+            <h4><p class="my-text"><b>Wybierz rodzaj OZE</b></p></h4>
+            <input type="checkbox" id="solar" name="oze" value="solar" checked>
+            <label for="solar"> Energia słoneczna - solar </label><br>
+            <input type="checkbox" id="wind" name="oze" value="wind_offshore">
+            <label for="wind"> Energia wiatrowa morska - wind offshore</label><br>
+            <input type="checkbox" id="wind_onshore" name="oze" value="wind_onshore">
+            <label for="wind_onshore"> Energia wiatrowa lądowa - wind onshore</label><br>
+        </div>
+      </div>
+  </div>
+        <div class="col-md-12 text-center" style="margin-top: 20px;">
+            <button type="submit">Wyślij</button>
+        </form>  
+    </div>
+</div>
+
+<!-- Wyświetlanie komunikatu o błędzie w przydaku braku danych -->
+  {% if error_msg %}
+    <div class="Error">
+      <b>{{ error_msg }}</b>
+    </div>
+  {% endif %}
+
+<div class="color-main-2">
+<!-- Wykres danych z tabeli -->
+  <div id="charts-container">
+     <h2>Wykres produkcji energii OZE dla kraju: {{ Kraj }}</h2>
+    <canvas id="ozeChart" width="900" height="450"></canvas>
+    <script>
+    fetch("/static/data/Dane_energetyczne.json")
+      .then(response => response.json())
+      .then(data => {
+
+        if (data.error) {
+          console.log(data.error);
+          return;
+        }
+
+        const labels = data.map(row => row.Data);
+
+        // Wyszukiwanie technolgi OZE z JSONa (wszystkie zmapowanie klucze oprócz "Data")
+        const techKeys = Object.keys(data[0]).filter(k => k !== "Data");
+
+        const datasets = techKeys.map(tech => {
+          return {
+            label: tech.toUpperCase(),
+            data: data.map(row => Number(row[tech])),
+            borderWidth: 2,
+            tension: 0.2
+          };
+        });
+
+        const ctx = document.getElementById("ozeChart").getContext("2d");
+
+        new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: labels,
+            datasets: datasets
+          },
+          options: {
+            responsive: true,
+            interaction: {
+              mode: "index",
+              intersect: false
+            },
+            plugins: {
+              legend: {
+                position: "top"
+              }
+            },
+            scales: {
+              x: {
+                title: { display: true, text: "Data" }
+              },
+              y: {
+                title: { display: true, text: "Produkcja, MWh" },
+                beginAtZero: true
+              }
+            }
+          }
+        });
+
+      });
+    </script>
+  </div>
+
+  <!-- Prezentacja wyników w tabeli -->
+  <div class="table-name">
+   <h2> Dane o produkcji energii OZE dla kraju: {{ Kraj }} </h2>
+  </div>
+  <div class="table-container" style="text-align: center;">
+    <table id="data-table" class="table table-striped table-bordered text-center">
+      <thead style="text-align: center;">
+        <tr id="table-head"></tr>
+      </thead>
+      <tbody id="table-body" style="text-align: center;">
+      <script>
+      fetch("/static/data/Dane_energetyczne.json")
+        .then(response => response.json())
+        .then(data => {
+          if (!data || data.length === 0) {
+            console.log("Brak danych w JSON");
+            return;
+          }
+
+          const theadRow = document.getElementById("table-head");
+          const tbody = document.getElementById("table-body");
+
+          // Czyszczenie tabeli przed wczytanie danych
+          theadRow.innerHTML = "";
+          tbody.innerHTML = "";
+
+          // Pobranie nazw kolumn z kluczy pierwszego obiektu w tablicy danych
+          const columns = Object.keys(data[0]);
+
+          columns.forEach(col => {
+            const th = document.createElement("th");
+            th.textContent = col;
+            theadRow.appendChild(th);
+          });
+
+          // Wypełnienie tabeli danymi
+          data.forEach(row => {
+            const tr = document.createElement("tr");
+
+            columns.forEach(col => {
+              const td = document.createElement("td");
+
+              let value = row[col];
+
+              // Formatowanie wartości liczbowych do 0 miejsc po przecinku
+              if (typeof value === "number") {
+                value = value.toFixed(0);
+              }
+
+              td.textContent = value;
+              tr.appendChild(td);
+            });
+
+            tbody.appendChild(tr);
+          });
+        })
+        .catch(err => console.error("Błąd wczytywania JSON:", err));
+      </script>
+        </tbody>
+    </table>
+  </div>
+
+<!-- Stopka -->
+  <div class="Footer">
+  <footer>
+      <p>Projekt końcowy z kursu Python Future Collars  - Dane o produkcji energii OZE w Europie</p>    
+      <p>Dane pochodzą z bazy OPSD (Open Power System Data)</p>
+      <p>Autor: Patryk Lipa</p>
+      <p>Mentor: Michał Ziętkowski</p>
+  </footer>
+  </div>
+</div>
+</div>
+</body>
+</html>
